@@ -6,6 +6,45 @@
 	</head>
 	<body>
 		<script>
+			var dataTree = {
+				"name": "data",
+				"ratings": [
+					{
+						"name": "PG-13",
+						"genres": { }
+					},
+					{
+						"name": "R",
+						"genres": { }
+					},
+					{
+						"name": "PG",
+						"genres": { }
+					},
+					{
+						"name": "G",
+						"genres": { }
+					},
+					{
+						"name": "Unrated",
+						"genres": { }
+					},
+					{
+						"name": "NC-17",
+						"genres": { }
+					},
+					{
+						"name": "TV-MA",
+						"genres": { }
+					}
+				]
+			}
+
+			var ratings = ["PG-13", "R", "PG", "", "Unrated", "Not Rated", "G", "NC-17", "TV-MA"];
+
+			d3.csv("movies.csv", function(csv) {
+
+			});
 		</script>
 	</body>
 </html>
