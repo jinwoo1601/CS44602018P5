@@ -38,6 +38,10 @@
 						"genres": []
 					},
 					{
+						"name": "TV-14",
+						"genres": []
+					},
+					{
 						"name": "Not Listed",
 						"genres": []
 					},
@@ -46,96 +50,151 @@
 						"genres": []
 					}
 				]
-			}
+			};
 
-			var ratings = ["PG-13", "R", "PG", "G", "Unrated", "NC-17", "TV-MA", "Not Rated", "Not Listed"];
+			var ratings = ["PG-13", "R", "PG", "G", "Unrated", "NC-17", "TV-MA", "TV-14", "Not Rated", "Not Listed"];
 
 			d3.csv("movies.csv", function(csv) {
-				for (int i=0; i<csv.length; i++) {
+				for (var i=0; i<csv.length; ++i) {
+					csv[i].gross = Number(csv[i].gross);
+					var movieObj = {
+								"name": csv[i].genres,
+								"gross": csv[i].gross
+							}
 					switch (csv[i].content_rating) {
-						case 1: ratings[0]
-							for (int k=0; k<dataTree.ratings[0].genres.length; k++) {
-								if (dataTree.ratings[0].genres[k] == csv[i].genres) {
-									dataTree.ratings[0].genres[k].push(csv[i]);
-								} else {
-									dataTree.ratings[0].genres.push(csv[i]);
+						case ratings[0]:
+							if (dataTree.ratings[0].genres.length == 0) {
+								dataTree.ratings[0].genres.push(movieObj);
+							} else {
+								for (var k=0; k<dataTree.ratings[0].genres.length; k++) {
+									if (dataTree.ratings[0].genres[k].name == csv[i].genres) {
+										dataTree.ratings[0].genres[k].gross += csv[i].gross;
+									} else {
+										dataTree.ratings[0].genres.push(movieObj);
+									}
 								}
 							}
 							break;
-						case 2: ratings[1]
-							for (int k=0; k<dataTree.ratings[1].genres.length; k++) {
-								if (dataTree.ratings[1].genres[k] == csv[i].genres) {
-									dataTree.ratings[1].genres[k].push(csv[i]);
-								} else {
-									dataTree.ratings[1].genres.push(csv[i]);
+						case ratings[1]:
+						if (dataTree.ratings[1].genres.length == 0) {
+								dataTree.ratings[1].genres.push(movieObj);
+							} else {
+								for (var k=0; k<dataTree.ratings[1].genres.length; k++) {
+									if (dataTree.ratings[1].genres[k].name == csv[i].genres) {
+										dataTree.ratings[1].genres[k].gross += csv[i].gross;
+									} else {
+										dataTree.ratings[1].genres.push(movieObj);
+									}
 								}
 							}
 							break;
-						case 3: ratings[2]
-							for (int k=0; k<dataTree.ratings[2].genres.length; k++) {
-								if (dataTree.ratings[2].genres[k] == csv[i].genres) {
-									dataTree.ratings[2].genres[k].push(csv[i]);
-								} else {
-									dataTree.ratings[2].genres.push(csv[i]);
+						case ratings[2]:
+						if (dataTree.ratings[2].genres.length == 0) {
+								dataTree.ratings[2].genres.push(movieObj);
+							} else {
+								for (var k=0; k<dataTree.ratings[2].genres.length; k++) {
+									if (dataTree.ratings[2].genres[k].name == csv[i].genres) {
+										dataTree.ratings[2].genres[k].gross += csv[i].gross;
+									} else {
+										dataTree.ratings[2].genres.push(movieObj);
+									}
 								}
 							}
 							break;
-						case 4: ratings[3]
-							for (int k=0; k<dataTree.ratings[3].genres.length; k++) {
-								if (dataTree.ratings[3].genres[k] == csv[i].genres) {
-									dataTree.ratings[3].genres[k].push(csv[i]);
-								} else {
-									dataTree.ratings[3].genres.push(csv[i]);
+						case ratings[3]:
+						if (dataTree.ratings[3].genres.length == 0) {
+								dataTree.ratings[3].genres.push(movieObj);
+							} else {
+								for (var k=0; k<dataTree.ratings[3].genres.length; k++) {
+									if (dataTree.ratings[3].genres[k].name == csv[i].genres) {
+										dataTree.ratings[3].genres[k].gross += csv[i].gross;
+									} else {
+										dataTree.ratings[3].genres.push(movieObj);
+									}
 								}
 							}
 							break;
-						case 5: ratings[4]
-							for (int k=0; k<dataTree.ratings[4].genres.length; k++) {
-								if (dataTree.ratings[4].genres[k] == csv[i].genres) {
-									dataTree.ratings[4].genres[k].push(csv[i]);
-								} else {
-									dataTree.ratings[4].genres.push(csv[i]);
+						case ratings[4]:
+						if (dataTree.ratings[4].genres.length == 0) {
+								dataTree.ratings[4].genres.push(movieObj);
+							} else {
+								for (var k=0; k<dataTree.ratings[4].genres.length; k++) {
+									if (dataTree.ratings[4].genres[k].name == csv[i].genres) {
+										dataTree.ratings[4].genres[k].gross += csv[i].gross;
+									} else {
+										dataTree.ratings[4].genres.push(movieObj);
+									}
 								}
 							}
 							break;
-						case 6: ratings[5]
-							for (int k=0; k<dataTree.ratings[5].genres.length; k++) {
-								if (dataTree.ratings[5].genres[k] == csv[i].genres) {
-									dataTree.ratings[5].genres[k].push(csv[i]);
-								} else {
-									dataTree.ratings[5].genres.push(csv[i]);
+						case ratings[5]:
+						if (dataTree.ratings[5].genres.length == 0) {
+								dataTree.ratings[5].genres.push(movieObj);
+							} else {
+								for (var k=0; k<dataTree.ratings[5].genres.length; k++) {
+									if (dataTree.ratings[5].genres[k].name == csv[i].genres) {
+										dataTree.ratings[5].genres[k].gross += csv[i].gross;
+									} else {
+										dataTree.ratings[5].genres.push(movieObj);
+									}
 								}
 							}
 							break;
-						case 7: ratings[6]
-							for (int k=0; k<dataTree.ratings[6].genres.length; k++) {
-								if (dataTree.ratings[6].genres[k] == csv[i].genres) {
-									dataTree.ratings[6].genres[k].push(csv[i]);
-								} else {
-									dataTree.ratings[6].genres.push(csv[i]);
+						case ratings[6]:
+						if (dataTree.ratings[6].genres.length == 0) {
+								dataTree.ratings[6].genres.push(movieObj);
+							} else {
+								for (var k=0; k<dataTree.ratings[6].genres.length; k++) {
+									if (dataTree.ratings[6].genres[k].name == csv[i].genres) {
+										dataTree.ratings[6].genres[k].gross += csv[i].gross;
+									} else {
+										dataTree.ratings[6].genres.push(movieObj);
+									}
 								}
 							}
 							break;
-						case 8: ratings[7]
-							for (int k=0; k<dataTree.ratings[7].genres.length; k++) {
-								if (dataTree.ratings[7].genres[k] == csv[i].genres) {
-									dataTree.ratings[7].genres[k].push(csv[i]);
-								} else {
-									dataTree.ratings[7].genres.push(csv[i]);
+						case ratings[7]:
+						if (dataTree.ratings[7].genres.length == 0) {
+								dataTree.ratings[7].genres.push(movieObj);
+							} else {
+								for (var k=0; k<dataTree.ratings[7].genres.length; k++) {
+									if (dataTree.ratings[7].genres[k].name == csv[i].genres) {
+										dataTree.ratings[7].genres[k].gross += csv[i].gross;
+									} else {
+										dataTree.ratings[7].genres.push(movieObj);
+									}
 								}
 							}
 							break;
-						case 9: ratings[8]
-							for (int k=0; k<dataTree.ratings[8].genres.length; k++) {
-								if (dataTree.ratings[8].genres[k] == csv[i].genres) {
-									dataTree.ratings[8].genres[k].push(csv[i]);
-								} else {
-									dataTree.ratings[8].genres.push(csv[i]);
+						case ratings[8]:
+						if (dataTree.ratings[8].genres.length == 0) {
+								dataTree.ratings[8].genres.push(movieObj);
+							} else {
+								for (var k=0; k<dataTree.ratings[8].genres.length; k++) {
+									if (dataTree.ratings[8].genres[k].name == csv[i].genres) {
+										dataTree.ratings[8].genres[k].gross += csv[i].gross;
+									} else {
+										dataTree.ratings[8].genres.push(movieObj);
+									}
+								}
+							}
+							break;
+						case ratings[9]:
+						if (dataTree.ratings[9].genres.length == 0) {
+								dataTree.ratings[9].genres.push(movieObj);
+							} else {
+								for (var k=0; k<dataTree.ratings[9].genres.length; k++) {
+									if (dataTree.ratings[9].genres[k].name == csv[i].genres) {
+										dataTree.ratings[9].genres[k].gross += csv[i].gross;
+									} else {
+										dataTree.ratings[9].genres.push(movieObj);
+									}
 								}
 							}
 							break;
 					}
 				}
+				console.log(dataTree);
 			});
 		</script>
 	</body>
