@@ -2,52 +2,52 @@
 <html>
 	<head>
 		<meta charset="UTF-8"/>
-		<script type="text/javascript" src="d3.js"></script>	  
+		<script src="http://d3js.org/d3.v4.min.js"></script>	  
 	</head>
 	<body>
 		<script>
 			var dataTree = {
 				"name": "data",
-				"ratings": [
+				"children": [
 					{
 						"name": "PG-13",
-						"genres": []
+						"children": []
 					},
 					{
 						"name": "R",
-						"genres": []
+						"children": []
 					},
 					{
 						"name": "PG",
-						"genres": []
+						"children": []
 					},
 					{
 						"name": "G",
-						"genres": []
+						"children": []
 					},
 					{
 						"name": "Unrated",
-						"genres": []
+						"children": []
 					},
 					{
 						"name": "NC-17",
-						"genres": []
+						"children": []
 					},
 					{
 						"name": "TV-MA",
-						"genres": []
+						"children": []
 					},
 					{
 						"name": "TV-14",
-						"genres": []
+						"children": []
 					},
 					{
 						"name": "Not Listed",
-						"genres": []
+						"children": []
 					},
 					{
 						"name": "Not Rated",
-						"genres": []
+						"children": []
 					}
 				]
 			};
@@ -59,174 +59,180 @@
 					csv[i].gross = Number(csv[i].gross);
 					var movieObj = {
 								"name": csv[i].genres,
-								"gross": csv[i].gross
+								"value": csv[i].gross
 							};
 					var pushCheck=1;
 					switch (csv[i].content_rating) {
 						case ratings[0]:
-							if (dataTree.ratings[0].genres.length == 0) {
-								dataTree.ratings[0].genres.push(movieObj);
+							if (dataTree.children[0].children.length == 0) {
+								dataTree.children[0].children.push(movieObj);
 							} else {
-								for (var k=0; k<dataTree.ratings[0].genres.length; k++) {
-									if (dataTree.ratings[0].genres[k].name == csv[i].genres) {
-										dataTree.ratings[0].genres[k].gross += csv[i].gross;
+								for (var k=0; k<dataTree.children[0].children.length; k++) {
+									if (dataTree.children[0].children[k].name == csv[i].genres) {
+										dataTree.children[0].children[k].value += csv[i].gross;
 										pushCheck=0;
 										break;
 									}
 								}
 								if (pushCheck) {
-									dataTree.ratings[0].genres.push(movieObj);
+									dataTree.children[0].children.push(movieObj);
 								}
 							}
 							break;
 						case ratings[1]:
-							if (dataTree.ratings[1].genres.length == 0) {
-								dataTree.ratings[1].genres.push(movieObj);
+							if (dataTree.children[1].children.length == 0) {
+								dataTree.children[1].children.push(movieObj);
 							} else {
-								for (var k=0; k<dataTree.ratings[1].genres.length; k++) {
-									if (dataTree.ratings[1].genres[k].name == csv[i].genres) {
-										dataTree.ratings[1].genres[k].gross += csv[i].gross;
+								for (var k=0; k<dataTree.children[1].children.length; k++) {
+									if (dataTree.children[1].children[k].name == csv[i].genres) {
+										dataTree.children[1].children[k].value += csv[i].gross;
 										pushCheck=0;
 										break;
 									}
 								}
 								if (pushCheck) {
-									dataTree.ratings[1].genres.push(movieObj);
+									dataTree.children[1].children.push(movieObj);
 								}
 							}
 							break;
 						case ratings[2]:
-							if (dataTree.ratings[2].genres.length == 0) {
-								dataTree.ratings[2].genres.push(movieObj);
+							if (dataTree.children[2].children.length == 0) {
+								dataTree.children[2].children.push(movieObj);
 							} else {
-								for (var k=0; k<dataTree.ratings[2].genres.length; k++) {
-									if (dataTree.ratings[2].genres[k].name == csv[i].genres) {
-										dataTree.ratings[2].genres[k].gross += csv[i].gross;
+								for (var k=0; k<dataTree.children[2].children.length; k++) {
+									if (dataTree.children[2].children[k].name == csv[i].genres) {
+										dataTree.children[2].children[k].value += csv[i].gross;
 										pushCheck=0;
 										break;
 									}
 								}
 								if (pushCheck) {
-									dataTree.ratings[2].genres.push(movieObj);
+									dataTree.children[2].children.push(movieObj);
 								}
 							}
 							break;
 						case ratings[3]:
-							if (dataTree.ratings[3].genres.length == 0) {
-								dataTree.ratings[3].genres.push(movieObj);
+							if (dataTree.children[3].children.length == 0) {
+								dataTree.children[3].children.push(movieObj);
 							} else {
-								for (var k=0; k<dataTree.ratings[3].genres.length; k++) {
-									if (dataTree.ratings[3].genres[k].name == csv[i].genres) {
-										dataTree.ratings[3].genres[k].gross += csv[i].gross;
+								for (var k=0; k<dataTree.children[3].children.length; k++) {
+									if (dataTree.children[3].children[k].name == csv[i].genres) {
+										dataTree.children[3].children[k].value += csv[i].gross;
 										pushCheck=0;
 										break;
 									}
 								}
 								if (pushCheck) {
-									dataTree.ratings[3].genres.push(movieObj);
+									dataTree.children[3].children.push(movieObj);
 								}
 							}
 							break;
 						case ratings[4]:
-							if (dataTree.ratings[4].genres.length == 0) {
-								dataTree.ratings[4].genres.push(movieObj);
+							if (dataTree.children[4].children.length == 0) {
+								dataTree.children[4].children.push(movieObj);
 							} else {
-								for (var k=0; k<dataTree.ratings[4].genres.length; k++) {
-									if (dataTree.ratings[4].genres[k].name == csv[i].genres) {
-										dataTree.ratings[4].genres[k].gross += csv[i].gross;
+								for (var k=0; k<dataTree.children[4].children.length; k++) {
+									if (dataTree.children[4].children[k].name == csv[i].genres) {
+										dataTree.children[4].children[k].value += csv[i].gross;
 										pushCheck=0;
 										break;
 									}
 								}
 								if (pushCheck) {
-									dataTree.ratings[4].genres.push(movieObj);
+									dataTree.children[4].children.push(movieObj);
 								}
 							}
 							break;
 						case ratings[5]:
-							if (dataTree.ratings[5].genres.length == 0) {
-								dataTree.ratings[5].genres.push(movieObj);
+							if (dataTree.children[5].children.length == 0) {
+								dataTree.children[5].children.push(movieObj);
 							} else {
-								for (var k=0; k<dataTree.ratings[5].genres.length; k++) {
-									if (dataTree.ratings[5].genres[k].name == csv[i].genres) {
-										dataTree.ratings[5].genres[k].gross += csv[i].gross;
+								for (var k=0; k<dataTree.children[5].children.length; k++) {
+									if (dataTree.children[5].children[k].name == csv[i].genres) {
+										dataTree.children[5].children[k].value += csv[i].gross;
 										pushCheck=0;
 										break;
 									}
 								}
 								if (pushCheck) {
-									dataTree.ratings[5].genres.push(movieObj);
+									dataTree.children[5].children.push(movieObj);
 								}
 							}
 							break;
 						case ratings[6]:
-							if (dataTree.ratings[6].genres.length == 0) {
-								dataTree.ratings[6].genres.push(movieObj);
+							if (dataTree.children[6].children.length == 0) {
+								dataTree.children[6].children.push(movieObj);
 							} else {
-								for (var k=0; k<dataTree.ratings[6].genres.length; k++) {
-									if (dataTree.ratings[6].genres[k].name == csv[i].genres) {
-										dataTree.ratings[6].genres[k].gross += csv[i].gross;
+								for (var k=0; k<dataTree.children[6].children.length; k++) {
+									if (dataTree.children[6].children[k].name == csv[i].genres) {
+										dataTree.children[6].children[k].value += csv[i].gross;
 										pushCheck=0;
 										break;
 									}
 								}
 								if (pushCheck) {
-									dataTree.ratings[6].genres.push(movieObj);
+									dataTree.children[6].children.push(movieObj);
 								}
 							}
 							break;
 						case ratings[7]:
-							if (dataTree.ratings[7].genres.length == 0) {
-								dataTree.ratings[7].genres.push(movieObj);
+							if (dataTree.children[7].children.length == 0) {
+								dataTree.children[7].children.push(movieObj);
 							} else {
-								for (var k=0; k<dataTree.ratings[7].genres.length; k++) {
-									if (dataTree.ratings[7].genres[k].name == csv[i].genres) {
-										dataTree.ratings[7].genres[k].gross += csv[i].gross;
+								for (var k=0; k<dataTree.children[7].children.length; k++) {
+									if (dataTree.children[7].children[k].name == csv[i].genres) {
+										dataTree.children[7].children[k].value += csv[i].gross;
 										pushCheck=0;
 										break;
 									}
 								}
 								if (pushCheck) {
-									dataTree.ratings[7].genres.push(movieObj);
+									dataTree.children[7].children.push(movieObj);
 								}
 							}
 							break;
 						case ratings[8]:
-							if (dataTree.ratings[8].genres.length == 0) {
-								dataTree.ratings[8].genres.push(movieObj);
+							if (dataTree.children[8].children.length == 0) {
+								dataTree.children[8].children.push(movieObj);
 							} else {
-								for (var k=0; k<dataTree.ratings[8].genres.length; k++) {
-									if (dataTree.ratings[8].genres[k].name == csv[i].genres) {
-										dataTree.ratings[8].genres[k].gross += csv[i].gross;
+								for (var k=0; k<dataTree.children[8].children.length; k++) {
+									if (dataTree.children[8].children[k].name == csv[i].genres) {
+										dataTree.children[8].children[k].value += csv[i].gross;
 										pushCheck=0;
 										break;
 									}
 								}
 								if (pushCheck) {
-									dataTree.ratings[8].genres.push(movieObj);
+									dataTree.children[8].children.push(movieObj);
 								}
 							}
 							break;
 						case ratings[9]:
-							if (dataTree.ratings[9].genres.length == 0) {
-								dataTree.ratings[9].genres.push(movieObj);
+							if (dataTree.children[9].children.length == 0) {
+								dataTree.children[9].children.push(movieObj);
 							} else {
-								for (var k=0; k<dataTree.ratings[9].genres.length; k++) {
-									if (dataTree.ratings[9].genres[k].name == csv[i].genres) {
-										dataTree.ratings[9].genres[k].gross += csv[i].gross;
+								for (var k=0; k<dataTree.children[9].children.length; k++) {
+									if (dataTree.children[9].children[k].name == csv[i].genres) {
+										dataTree.children[9].children[k].value += csv[i].gross;
 										pushCheck=0;
 										break;
 									}
 								}
 								if (pushCheck) {
-									dataTree.ratings[9].genres.push(movieObj);
+									dataTree.children[0].children.push(movieObj);
 								}
 							}
 							break;
 					}
 				}
-				console.log(dataTree);
 			});
+			console.log(dataTree);
+			var root = d3.hierarchy(dataTree);
+			root.sum(function(d) {return d.value;})
+			console.log(root);
+			// var treemap = d3.treemap(root);
+			// console.log(treemap);
+			// console.log(dataTree.sum(function(d) {return d.gross;}));
 		</script>
 	</body>
 </html>
