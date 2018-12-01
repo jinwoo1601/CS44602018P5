@@ -10,11 +10,11 @@
 		  width: 850px;
 		  height: 680px;
 		}
-		rect {
+		/* rect {
 		  fill: darkblue;
 		  opacity: 0.3;
 		  stroke: white;
-		}
+		} */
 		text {
 		  font-family: "Helvetica Neue", Helvetica, sans-serif;
 		  font-size: 12px;
@@ -25,16 +25,21 @@
 		}
 	</style>
 	<body>
+		<h1>Treemap of Gross Revenue of Movies by Content rating</h1>
 		<div id="content"></div>
+		<div id="textarea">
+				<strong>Gross Revenue:</strong> <span id="grossR"></span><br/>
+		</div>
 		
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.2.2/d3.min.js"></script>
 		<script>
 
 			var ratings = ["PG-13", "R", "PG", "G", "Unrated", "NC-17", "TV-MA", "Not Listed"];
 			var ratingsGross = [0, 0, 0, 0, 0, 0, 0, 0];
+			var color = d3.scaleOrdinal().range(d3.schemeCategory10)
 
 			var dataTree = {
-				"name": "data",
+				"name": "Total Gross Revenue",
 				"children": [
 					{
 						"name": "PG-13",
@@ -132,8 +137,12 @@
 
 				nodes
 					.append('rect')
+					.attr("fill", d => { while (d.depth > 1) d = d.parent; return color(d.data.name); })
 					.attr('width', function(d) { return d.x1 - d.x0; })
 					.attr('height', function(d) { return d.y1 - d.y0; })
+					.on("mouseover", function(d) {
+						document.getElementById("grossR").textContent=d.value;
+					})
 
 				nodes
 					.append('text')
@@ -152,6 +161,7 @@
 			.attr('width', width + 'px')
 			.attr('height', height + 'px')
 			.each(enteringTreemap)
+			
 
 			// console.log(dataTree.sum(function(d) {return d.gross;}));
 		</script>
