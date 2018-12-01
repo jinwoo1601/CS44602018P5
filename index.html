@@ -49,39 +49,7 @@
 			var ratingsGross = [0, 0, 0, 0, 0, 0, 0, 0];
 			var color = d3.scaleOrdinal().range(d3.schemeCategory10)
 
-			var dataTree = {
-				"name": "Total Gross Revenue",
-				"children": [
-					{
-						"name": "PG-13",
-						"value": 33850049614
-					},
-					{
-						"name": "R",
-						"value": 15684997614
-					},
-					{
-						"name": "PG",
-						"value": 15077401596
-					},
-					{
-						"name": "G",
-						"value": 1540370967
-					},
-					{
-						"name": "Unrated",
-						"value": 1009472
-					},
-					{
-						"name": "NC-17",
-						"value": 4000304
-					},
-					{
-						"name": "TV-MA",
-						"value": 894186
-					}
-				]
-			}
+			var dataTree = {};
 
 			d3.csv("movies.csv", function(csv) {
 				for (var i=0; i < csv.length; ++i) {
@@ -113,65 +81,100 @@
 							break;
 					}
 				}
+				
+				dataTree = {
+					"name": "Total Gross Revenue",
+					"children": [
+						{
+							"name": "PG-13",
+							"value": ratingsGross[0]
+						},
+						{
+							"name": "R",
+							"value": ratingsGross[1]
+						},
+						{
+							"name": "PG",
+							"value": ratingsGross[2]
+						},
+						{
+							"name": "G",
+							"value": ratingsGross[3]
+						},
+						{
+							"name": "Unrated",
+							"value": ratingsGross[4]
+						},
+						{
+							"name": "NC-17",
+							"value": ratingsGross[5]
+						},
+						{
+							"name": "TV-MA",
+							"value": ratingsGross[6]
+						}
+					]
+				}
+				var width = 1400, height = 800;
+
+				var ratios = [1];
+
+				var treemapLayout = d3.treemap()
+					.size([1400, 700])
+					.paddingOuter(16);
+
+				var rootNode = d3.hierarchy(dataTree)
+				rootNode.sum(function(d) {
+					return d.value;
+				});
+
+				function enteringTreemap(d) {
+
+					treemapLayout.tile(d3.treemapSquarify.ratio(d))
+					treemapLayout(rootNode);
+
+					d3.select(this)
+						.append('text')
+						// .text(function(d) {return 'Ratio = ' + d})
+						.attr('dy', 14)
+
+					var nodes = d3.select(this)
+						.append('g')
+						.attr('transform', 'translate(0, 20)')
+						.selectAll('g')
+						.data(rootNode.descendants())
+						.enter()
+						.append('g')
+						.attr('transform', function(d) {return 'translate(' + [d.x0, d.y0] + ')'})
+
+					nodes
+						.append('rect')
+						.attr("fill", d => { while (d.depth > 1) d = d.parent; return color(d.data.name); })
+						.attr('width', function(d) { return d.x1 - d.x0; })
+						.attr('height', function(d) { return d.y1 - d.y0; })
+						.on("mouseover", function(d) {
+							document.getElementById("grossR").textContent=d.value;
+						})
+
+					nodes
+						.append('text')
+						.attr('dx', 4)
+						.attr('dy', 14)
+						.text(function(d) {
+							return d.data.name;
+						})
+				}
+
+				var treemaps = d3.select('#content')
+				.selectAll('svg')
+				.data(ratios)
+				.enter()
+				.append('svg')
+				.attr('width', width + 'px')
+				.attr('height', height + 'px')
+				.each(enteringTreemap)
 			});
-			var width = 1400, height = 800;
-
-			var ratios = [1];
-
-			var treemapLayout = d3.treemap()
-				.size([1400, 700])
-				.paddingOuter(16);
-
-			var rootNode = d3.hierarchy(dataTree)
-			rootNode.sum(function(d) {
-				return d.value;
-			});
-
-			function enteringTreemap(d) {
-
-				treemapLayout.tile(d3.treemapSquarify.ratio(d))
-				treemapLayout(rootNode);
-
-				d3.select(this)
-					.append('text')
-					// .text(function(d) {return 'Ratio = ' + d})
-					.attr('dy', 14)
-
-				var nodes = d3.select(this)
-					.append('g')
-					.attr('transform', 'translate(0, 20)')
-					.selectAll('g')
-					.data(rootNode.descendants())
-					.enter()
-					.append('g')
-					.attr('transform', function(d) {return 'translate(' + [d.x0, d.y0] + ')'})
-
-				nodes
-					.append('rect')
-					.attr("fill", d => { while (d.depth > 1) d = d.parent; return color(d.data.name); })
-					.attr('width', function(d) { return d.x1 - d.x0; })
-					.attr('height', function(d) { return d.y1 - d.y0; })
-					.on("mouseover", function(d) {
-						document.getElementById("grossR").textContent=d.value;
-					})
-
-				nodes
-					.append('text')
-					.attr('dx', 4)
-					.attr('dy', 14)
-					.text(function(d) {
-						return d.data.name;
-					})
-			}
-
-			var treemaps = d3.select('#content')
-			.selectAll('svg')
-			.data(ratios)
-			.enter()
-			.append('svg')
-			.attr('width', width + 'px')
-			.attr('height', height + 'px')
-			.each(enteringTreemap)
+			
 			
 
 			// console.log(dataTree.sum(function(d) {return d.gross;}));
