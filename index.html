@@ -4,7 +4,30 @@
 		<meta charset="UTF-8"/>
 		<script src="http://d3js.org/d3.v4.min.js"></script>	  
 	</head>
+	
+	<style>
+		#content {
+		  width: 850px;
+		  height: 680px;
+		}
+		rect {
+		  fill: darkblue;
+		  opacity: 0.3;
+		  stroke: white;
+		}
+		text {
+		  font-family: "Helvetica Neue", Helvetica, sans-serif;
+		  font-size: 12px;
+		}
+		g text {
+		  fill: white;
+		  font-size: 10px;
+		}
+	</style>
 	<body>
+		<div id="content"></div>
+		
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.2.2/d3.min.js"></script>
 		<script>
 
 			var ratings = ["PG-13", "R", "PG", "G", "Unrated", "NC-17", "TV-MA", "Not Listed"];
@@ -75,15 +98,61 @@
 					}
 				}
 			});
-			var rootNode = d3.hierarchy(dataTree, function(d) {return d.children;});
-		
+			var width = 1400, height = 800;
+
+			var ratios = [1];
+
+			var treemapLayout = d3.treemap()
+				.size([1400, 700])
+				.paddingOuter(16);
+
+			var rootNode = d3.hierarchy(dataTree)
 			rootNode.sum(function(d) {
 				return d.value;
 			});
-			console.log(rootNode);
-			console.log(rootNode.value);
-			var treemap = d3.treemap(rootNode);
-			console.log(treemap);
+
+			function enteringTreemap(d) {
+
+				treemapLayout.tile(d3.treemapSquarify.ratio(d))
+				treemapLayout(rootNode);
+
+				d3.select(this)
+					.append('text')
+					// .text(function(d) {return 'Ratio = ' + d})
+					.attr('dy', 14)
+
+				var nodes = d3.select(this)
+					.append('g')
+					.attr('transform', 'translate(0, 20)')
+					.selectAll('g')
+					.data(rootNode.descendants())
+					.enter()
+					.append('g')
+					.attr('transform', function(d) {return 'translate(' + [d.x0, d.y0] + ')'})
+
+				nodes
+					.append('rect')
+					.attr('width', function(d) { return d.x1 - d.x0; })
+					.attr('height', function(d) { return d.y1 - d.y0; })
+
+				nodes
+					.append('text')
+					.attr('dx', 4)
+					.attr('dy', 14)
+					.text(function(d) {
+						return d.data.name;
+					})
+			}
+
+			var treemaps = d3.select('#content')
+			.selectAll('svg')
+			.data(ratios)
+			.enter()
+			.append('svg')
+			.attr('width', width + 'px')
+			.attr('height', height + 'px')
+			.each(enteringTreemap)
+
 			// console.log(dataTree.sum(function(d) {return d.gross;}));
 		</script>
 	</body>
