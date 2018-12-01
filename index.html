@@ -6,232 +6,84 @@
 	</head>
 	<body>
 		<script>
+
+			var ratings = ["PG-13", "R", "PG", "G", "Unrated", "NC-17", "TV-MA", "Not Listed"];
+			var ratingsGross = [0, 0, 0, 0, 0, 0, 0, 0];
+
 			var dataTree = {
 				"name": "data",
 				"children": [
 					{
 						"name": "PG-13",
-						"children": []
+						"value": 33850049614
 					},
 					{
 						"name": "R",
-						"children": []
+						"value": 15684997614
 					},
 					{
 						"name": "PG",
-						"children": []
+						"value": 15077401596
 					},
 					{
 						"name": "G",
-						"children": []
+						"value": 1540370967
 					},
 					{
 						"name": "Unrated",
-						"children": []
+						"value": 1009472
 					},
 					{
 						"name": "NC-17",
-						"children": []
+						"value": 4000304
 					},
 					{
 						"name": "TV-MA",
-						"children": []
-					},
-					{
-						"name": "TV-14",
-						"children": []
-					},
-					{
-						"name": "Not Listed",
-						"children": []
-					},
-					{
-						"name": "Not Rated",
-						"children": []
+						"value": 894186
 					}
 				]
-			};
-
-			var ratings = ["PG-13", "R", "PG", "G", "Unrated", "NC-17", "TV-MA", "TV-14", "Not Rated", "Not Listed"];
+			}
 
 			d3.csv("movies.csv", function(csv) {
-				for (var i=0; i<csv.length; ++i) {
+				for (var i=0; i < csv.length; ++i) {
 					csv[i].gross = Number(csv[i].gross);
-					var movieObj = {
-								"name": csv[i].genres,
-								"value": csv[i].gross
-							};
-					var pushCheck=1;
 					switch (csv[i].content_rating) {
 						case ratings[0]:
-							if (dataTree.children[0].children.length == 0) {
-								dataTree.children[0].children.push(movieObj);
-							} else {
-								for (var k=0; k<dataTree.children[0].children.length; k++) {
-									if (dataTree.children[0].children[k].name == csv[i].genres) {
-										dataTree.children[0].children[k].value += csv[i].gross;
-										pushCheck=0;
-										break;
-									}
-								}
-								if (pushCheck) {
-									dataTree.children[0].children.push(movieObj);
-								}
-							}
+							ratingsGross[0] += csv[i].gross;
 							break;
 						case ratings[1]:
-							if (dataTree.children[1].children.length == 0) {
-								dataTree.children[1].children.push(movieObj);
-							} else {
-								for (var k=0; k<dataTree.children[1].children.length; k++) {
-									if (dataTree.children[1].children[k].name == csv[i].genres) {
-										dataTree.children[1].children[k].value += csv[i].gross;
-										pushCheck=0;
-										break;
-									}
-								}
-								if (pushCheck) {
-									dataTree.children[1].children.push(movieObj);
-								}
-							}
+							ratingsGross[1] += csv[i].gross;
 							break;
 						case ratings[2]:
-							if (dataTree.children[2].children.length == 0) {
-								dataTree.children[2].children.push(movieObj);
-							} else {
-								for (var k=0; k<dataTree.children[2].children.length; k++) {
-									if (dataTree.children[2].children[k].name == csv[i].genres) {
-										dataTree.children[2].children[k].value += csv[i].gross;
-										pushCheck=0;
-										break;
-									}
-								}
-								if (pushCheck) {
-									dataTree.children[2].children.push(movieObj);
-								}
-							}
+							ratingsGross[2] += csv[i].gross;
 							break;
 						case ratings[3]:
-							if (dataTree.children[3].children.length == 0) {
-								dataTree.children[3].children.push(movieObj);
-							} else {
-								for (var k=0; k<dataTree.children[3].children.length; k++) {
-									if (dataTree.children[3].children[k].name == csv[i].genres) {
-										dataTree.children[3].children[k].value += csv[i].gross;
-										pushCheck=0;
-										break;
-									}
-								}
-								if (pushCheck) {
-									dataTree.children[3].children.push(movieObj);
-								}
-							}
+							ratingsGross[3] += csv[i].gross;
 							break;
 						case ratings[4]:
-							if (dataTree.children[4].children.length == 0) {
-								dataTree.children[4].children.push(movieObj);
-							} else {
-								for (var k=0; k<dataTree.children[4].children.length; k++) {
-									if (dataTree.children[4].children[k].name == csv[i].genres) {
-										dataTree.children[4].children[k].value += csv[i].gross;
-										pushCheck=0;
-										break;
-									}
-								}
-								if (pushCheck) {
-									dataTree.children[4].children.push(movieObj);
-								}
-							}
+							ratingsGross[4] += csv[i].gross;
 							break;
 						case ratings[5]:
-							if (dataTree.children[5].children.length == 0) {
-								dataTree.children[5].children.push(movieObj);
-							} else {
-								for (var k=0; k<dataTree.children[5].children.length; k++) {
-									if (dataTree.children[5].children[k].name == csv[i].genres) {
-										dataTree.children[5].children[k].value += csv[i].gross;
-										pushCheck=0;
-										break;
-									}
-								}
-								if (pushCheck) {
-									dataTree.children[5].children.push(movieObj);
-								}
-							}
+							ratingsGross[5] += csv[i].gross;
 							break;
 						case ratings[6]:
-							if (dataTree.children[6].children.length == 0) {
-								dataTree.children[6].children.push(movieObj);
-							} else {
-								for (var k=0; k<dataTree.children[6].children.length; k++) {
-									if (dataTree.children[6].children[k].name == csv[i].genres) {
-										dataTree.children[6].children[k].value += csv[i].gross;
-										pushCheck=0;
-										break;
-									}
-								}
-								if (pushCheck) {
-									dataTree.children[6].children.push(movieObj);
-								}
-							}
+							ratingsGross[6] += csv[i].gross;
 							break;
 						case ratings[7]:
-							if (dataTree.children[7].children.length == 0) {
-								dataTree.children[7].children.push(movieObj);
-							} else {
-								for (var k=0; k<dataTree.children[7].children.length; k++) {
-									if (dataTree.children[7].children[k].name == csv[i].genres) {
-										dataTree.children[7].children[k].value += csv[i].gross;
-										pushCheck=0;
-										break;
-									}
-								}
-								if (pushCheck) {
-									dataTree.children[7].children.push(movieObj);
-								}
-							}
-							break;
-						case ratings[8]:
-							if (dataTree.children[8].children.length == 0) {
-								dataTree.children[8].children.push(movieObj);
-							} else {
-								for (var k=0; k<dataTree.children[8].children.length; k++) {
-									if (dataTree.children[8].children[k].name == csv[i].genres) {
-										dataTree.children[8].children[k].value += csv[i].gross;
-										pushCheck=0;
-										break;
-									}
-								}
-								if (pushCheck) {
-									dataTree.children[8].children.push(movieObj);
-								}
-							}
-							break;
-						case ratings[9]:
-							if (dataTree.children[9].children.length == 0) {
-								dataTree.children[9].children.push(movieObj);
-							} else {
-								for (var k=0; k<dataTree.children[9].children.length; k++) {
-									if (dataTree.children[9].children[k].name == csv[i].genres) {
-										dataTree.children[9].children[k].value += csv[i].gross;
-										pushCheck=0;
-										break;
-									}
-								}
-								if (pushCheck) {
-									dataTree.children[0].children.push(movieObj);
-								}
-							}
+							ratingsGross[7] += csv[i].gross;
 							break;
 					}
 				}
 			});
-			console.log(dataTree);
-			var root = d3.hierarchy(dataTree);
-			root.sum(function(d) {return d.value;})
-			console.log(root);
-			// var treemap = d3.treemap(root);
-			// console.log(treemap);
+			var rootNode = d3.hierarchy(dataTree, function(d) {return d.children;});
+		
+			rootNode.sum(function(d) {
+				return d.value;
+			});
+			console.log(rootNode);
+			console.log(rootNode.value);
+			var treemap = d3.treemap(rootNode);
+			console.log(treemap);
 			// console.log(dataTree.sum(function(d) {return d.gross;}));
 		</script>
 	</body>
