@@ -28,19 +28,23 @@
 		h1 {
 			color: aliceblue;
 		}
+		strong {
+			color: aliceblue;
+		}
 	</style>
 	<body>
-		<h1>Treemap of Gross Revenue of Movies by Content rating</h1>
+		<h1>Treemap of Gross Revenue of Movies by Content rating</h1> <p>
+				<strong>᠌᠌᠌᠌᠌᠌᠌᠌᠌᠌᠌᠌᠌᠌᠌᠌᠌᠌᠌᠌᠌᠌᠌᠌᠌᠌᠌᠌᠌᠌᠌᠌᠌᠌᠌<span id="nameR"></span> <span id="grossR"></span><br/></strong>
+		</p>
 		<div id="content"></div>
-		<div id="textarea">
-				<strong><span id="nameR"></span> <span id="grossR"></span><br/></strong>
-		</div>
 		
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.2.2/d3.min.js"></script>
 		<script>
 			var ratings = ["PG-13", "R", "PG", "G", "Unrated", "NC-17", "TV-MA", "Not Listed"];
 			var ratingsGross = [0, 0, 0, 0, 0, 0, 0, 0];
 			var color = d3.scaleOrdinal().range(d3.schemeCategory10)
+            var border=1;
+            var bordercolor='black';
 			d3.csv("movies.csv", function(csv) {
 				dataTree = {
 					"name": "Total",
@@ -301,6 +305,8 @@
 							var inputString2 = "$" + d.value;
 							document.getElementById("grossR").textContent=inputString2;
 						})
+						.style("stroke", bordercolor)
+						.style("stroke-width", border)
 
 					nodes
 						.append('text')
