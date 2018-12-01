@@ -4,24 +4,23 @@
 		<meta charset="UTF-8"/>
 		<script src="http://d3js.org/d3.v4.min.js"></script>	  
 	</head>
-	
 	<style>
 		#content {
-		  width: 850px;
-		  height: 680px;
+			width: 850px;
+			height: 680px;
 		}
 		/* rect {
-		  fill: darkblue;
-		  opacity: 0.3;
-		  stroke: white;
+			fill: darkblue;
+			opacity: 0.3;
+			stroke: white;
 		} */
 		text {
-		  font-family: "Helvetica Neue", Helvetica, sans-serif;
-		  font-size: 12px;
+			font-family: "Helvetica Neue", Helvetica, sans-serif;
+			font-size: 12px;
 		}
 		g text {
-		  fill: white;
-		  font-size: 10px;
+			fill: white;
+			font-size: 10px;
 		}
 		body {
 			background-color: black;
@@ -44,76 +43,224 @@
 		
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.2.2/d3.min.js"></script>
 		<script>
-
 			var ratings = ["PG-13", "R", "PG", "G", "Unrated", "NC-17", "TV-MA", "Not Listed"];
 			var ratingsGross = [0, 0, 0, 0, 0, 0, 0, 0];
 			var color = d3.scaleOrdinal().range(d3.schemeCategory10)
-
-			var dataTree = {};
-
 			d3.csv("movies.csv", function(csv) {
-				for (var i=0; i < csv.length; ++i) {
-					csv[i].gross = Number(csv[i].gross);
-					switch (csv[i].content_rating) {
-						case ratings[0]:
-							ratingsGross[0] += csv[i].gross;
-							break;
-						case ratings[1]:
-							ratingsGross[1] += csv[i].gross;
-							break;
-						case ratings[2]:
-							ratingsGross[2] += csv[i].gross;
-							break;
-						case ratings[3]:
-							ratingsGross[3] += csv[i].gross;
-							break;
-						case ratings[4]:
-							ratingsGross[4] += csv[i].gross;
-							break;
-						case ratings[5]:
-							ratingsGross[5] += csv[i].gross;
-							break;
-						case ratings[6]:
-							ratingsGross[6] += csv[i].gross;
-							break;
-						case ratings[7]:
-							ratingsGross[7] += csv[i].gross;
-							break;
-					}
-				}
-				
 				dataTree = {
-					"name": "Total Gross Revenue",
+					"name": "data",
 					"children": [
 						{
 							"name": "PG-13",
-							"value": ratingsGross[0]
+							"children": []
 						},
 						{
 							"name": "R",
-							"value": ratingsGross[1]
+							"children": []
 						},
 						{
 							"name": "PG",
-							"value": ratingsGross[2]
+							"children": []
 						},
 						{
 							"name": "G",
-							"value": ratingsGross[3]
+							"children": []
 						},
 						{
 							"name": "Unrated",
-							"value": ratingsGross[4]
+							"children": []
 						},
 						{
 							"name": "NC-17",
-							"value": ratingsGross[5]
+							"children": []
 						},
 						{
 							"name": "TV-MA",
-							"value": ratingsGross[6]
+							"children": []
+						},
+						{
+							"name": "TV-14",
+							"children": []
+						},
+						{
+							"name": "Not Listed",
+							"children": []
+						},
+						{
+							"name": "Not Rated",
+							"children": []
 						}
 					]
+				}
+				for (var i=0; i<csv.length; ++i) {
+					csv[i].gross = Number(csv[i].gross);
+					var movieObj = {
+								"name": csv[i].genres,
+								"value": csv[i].gross
+							};
+					var pushCheck=1;
+					switch (csv[i].content_rating) {
+					case ratings[0]:
+						if (dataTree.children[0].children.length == 0) {
+							dataTree.children[0].children.push(movieObj);
+						} else {
+							for (var k=0; k<dataTree.children[0].children.length; k++) {
+								if (dataTree.children[0].children[k].name == csv[i].genres) {
+									dataTree.children[0].children[k].value += csv[i].gross;
+									pushCheck=0;
+									break;
+								}
+							}
+							if (pushCheck) {
+								dataTree.children[0].children.push(movieObj);
+							}
+						}
+						break;
+					case ratings[1]:
+						if (dataTree.children[1].children.length == 0) {
+							dataTree.children[1].children.push(movieObj);
+						} else {
+							for (var k=0; k<dataTree.children[1].children.length; k++) {
+								if (dataTree.children[1].children[k].name == csv[i].genres) {
+									dataTree.children[1].children[k].value += csv[i].gross;
+									pushCheck=0;
+									break;
+								}
+							}
+							if (pushCheck) {
+								dataTree.children[1].children.push(movieObj);
+							}
+						}
+						break;
+					case ratings[2]:
+						if (dataTree.children[2].children.length == 0) {
+							dataTree.children[2].children.push(movieObj);
+						} else {
+							for (var k=0; k<dataTree.children[2].children.length; k++) {
+								if (dataTree.children[2].children[k].name == csv[i].genres) {
+									dataTree.children[2].children[k].value += csv[i].gross;
+									pushCheck=0;
+									break;
+								}
+							}
+							if (pushCheck) {
+								dataTree.children[2].children.push(movieObj);
+							}
+						}
+						break;
+					case ratings[3]:
+						if (dataTree.children[3].children.length == 0) {
+							dataTree.children[3].children.push(movieObj);
+						} else {
+							for (var k=0; k<dataTree.children[3].children.length; k++) {
+								if (dataTree.children[3].children[k].name == csv[i].genres) {
+									dataTree.children[3].children[k].value += csv[i].gross;
+									pushCheck=0;
+									break;
+								}
+							}
+							if (pushCheck) {
+								dataTree.children[3].children.push(movieObj);
+							}
+						}
+						break;
+					case ratings[4]:
+						if (dataTree.children[4].children.length == 0) {
+							dataTree.children[4].children.push(movieObj);
+						} else {
+							for (var k=0; k<dataTree.children[4].children.length; k++) {
+								if (dataTree.children[4].children[k].name == csv[i].genres) {
+									dataTree.children[4].children[k].value += csv[i].gross;
+									pushCheck=0;
+									break;
+								}
+							}
+							if (pushCheck) {
+								dataTree.children[4].children.push(movieObj);
+							}
+						}
+						break;
+					case ratings[5]:
+						if (dataTree.children[5].children.length == 0) {
+							dataTree.children[5].children.push(movieObj);
+						} else {
+							for (var k=0; k<dataTree.children[5].children.length; k++) {
+								if (dataTree.children[5].children[k].name == csv[i].genres) {
+									dataTree.children[5].children[k].value += csv[i].gross;
+									pushCheck=0;
+									break;
+								}
+							}
+							if (pushCheck) {
+								dataTree.children[5].children.push(movieObj);
+							}
+						}
+						break;
+					case ratings[6]:
+						if (dataTree.children[6].children.length == 0) {
+							dataTree.children[6].children.push(movieObj);
+						} else {
+							for (var k=0; k<dataTree.children[6].children.length; k++) {
+								if (dataTree.children[6].children[k].name == csv[i].genres) {
+									dataTree.children[6].children[k].value += csv[i].gross;
+									pushCheck=0;
+									break;
+								}
+							}
+							if (pushCheck) {
+								dataTree.children[6].children.push(movieObj);
+							}
+						}
+						break;
+					case ratings[7]:
+						if (dataTree.children[7].children.length == 0) {
+							dataTree.children[7].children.push(movieObj);
+						} else {
+							for (var k=0; k<dataTree.children[7].children.length; k++) {
+								if (dataTree.children[7].children[k].name == csv[i].genres) {
+									dataTree.children[7].children[k].value += csv[i].gross;
+									pushCheck=0;
+									break;
+								}
+							}
+							if (pushCheck) {
+								dataTree.children[7].children.push(movieObj);
+							}
+						}
+						break;
+					case ratings[8]:
+						if (dataTree.children[8].children.length == 0) {
+							dataTree.children[8].children.push(movieObj);
+						} else {
+							for (var k=0; k<dataTree.children[8].children.length; k++) {
+								if (dataTree.children[8].children[k].name == csv[i].genres) {
+									dataTree.children[8].children[k].value += csv[i].gross;
+									pushCheck=0;
+									break;
+								}
+							}
+							if (pushCheck) {
+								dataTree.children[8].children.push(movieObj);
+							}
+						}
+						break;
+					case ratings[9]:
+						if (dataTree.children[9].children.length == 0) {
+							dataTree.children[9].children.push(movieObj);
+						} else {
+							for (var k=0; k<dataTree.children[9].children.length; k++) {
+								if (dataTree.children[9].children[k].name == csv[i].genres) {
+									dataTree.children[9].children[k].value += csv[i].gross;
+									pushCheck=0;
+									break;
+								}
+							}
+							if (pushCheck) {
+								dataTree.children[0].children.push(movieObj);
+							}
+						}
+						break;
+					}
 				}
 				var width = 1400, height = 800;
 
@@ -127,6 +274,7 @@
 				rootNode.sum(function(d) {
 					return d.value;
 				});
+				console.log(rootNode.value);
 
 				function enteringTreemap(d) {
 
@@ -174,8 +322,6 @@
 				.attr('height', height + 'px')
 				.each(enteringTreemap)
 			});
-			
-			// console.log(dataTree.sum(function(d) {return d.gross;}));
 		</script>
 	</body>
 </html>
